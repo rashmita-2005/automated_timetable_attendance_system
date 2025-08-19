@@ -1,4 +1,4 @@
-const mongoose=required('mongoose');
+const mongoose=require('mongoose');
 
 const attendanceSchema=new mongoose.Schema({
     timetableId:{type:mongoose.Schema.Types.ObjectId,ref:'timetable',required:true},
