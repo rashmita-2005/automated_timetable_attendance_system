@@ -9,6 +9,11 @@ const{authRouter}=require("./controllers/authControl");
 
 const app=new express();
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173",  // frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use("/api/auth/user",authRouter);
 
 app.listen(5000);
