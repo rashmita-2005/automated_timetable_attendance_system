@@ -46,6 +46,7 @@ function ManageStudents() {
       <DataGrid
         rows={students} // Use students from context
         columns={columns}
+        getRowId={(row) => row._id}
         initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } }}}
         pageSizeOptions={[5, 10]}
         checkboxSelection
