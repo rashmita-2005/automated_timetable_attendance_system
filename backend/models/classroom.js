@@ -1,8 +1,28 @@
 const mongoose = require('mongoose');
 
 const classroomSchema=new mongoose.Schema({
-    size:{type:Number,required:true},
-    name:{type:String,required:true,unique:true}
+    name:{type:String,required:true,unique:true},
+    roomNumber:{type:String,required:true},
+    building:{type:String,required:true},
+    floor:{type:Number,required:true},
+    capacity:{type:Number,required:true},
+    type:{type:String,enum:['lecture','lab','seminar','auditorium'],default:'lecture'},
+    facilities:[{type:String}],
+    department:{type:String},
+    isAvailable:{type:Boolean,default:true},
+    isActive:{type:Boolean,default:true},
+    createdAt:{type:Date,default:Date.now},
+    updatedAt:{type:Date,default:Date.now}
 });
 
-module.exports=mongoose.model('classroom',classroomSchema);
+classroomSchema.index({name:1});
+classroomSchema.index({building:1,floor:1});
+classroomSchema.index({type:1});
+
+classroomSchema.pre('save', function(next) {
+    this.updatedAt = Date.now();
+    next();
+});
+
+const classroomModel = mongoose.model('Classroom', classroomSchema);
+module.exports = { classroomModel };
