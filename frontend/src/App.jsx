@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import './App.css'
+import HomePage from "./pages/homepage"; 
 import RegisterPage2 from "./pages/registerPage2";
 import LoginPage2 from "./pages/loginPage2";
 import { AuthProvider } from "./context/authContext";
@@ -21,6 +22,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<HomePage />} />
+
           <Route path="/register" element={<RegisterPage2 />} />
           <Route path="/login" element={<LoginPage2 />} />
           <Route path="/student-dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />

@@ -23,5 +23,5 @@ function FacultyDashboard() {
     </Container>
   );
 }
-
 export default FacultyDashboard;
+
