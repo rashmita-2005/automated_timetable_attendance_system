@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/authContext";
 import AdminDashboard from "./pages/adminDashboard";
 import ProtectedRoute from "./components/protectedRoute";
 import StudentDashboard from "./pages/studentDashboard";
+import FacultyDashboard from "./pages/facultyDashboard";
 import ManageStudents from "./pages/manageStudent";
 import AddStudent from "./pages/addStudent";
 import EditStudent from "./pages/editStudent";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<LoginPage2 />} />
           <Route path="/student-dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
           <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/faculty-dashboard" element={<ProtectedRoute role="faculty"><FacultyDashboard /></ProtectedRoute>} />
           <Route element={<ProtectedRoute role="admin"><StudentProvider><Outlet /></StudentProvider></ProtectedRoute>}>
             <Route path="/admin/students" element={<ManageStudents />} />
             <Route path="/admin/students/new" element={<AddStudent />} />
