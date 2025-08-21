@@ -1,29 +1,33 @@
 // src/pages/AddStudent.jsx
 
-import React, { useState, useContext } from 'react'; // Import useContext
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StudentContext } from '../context/StudentContext'; // Import the context
-import { Box, Button, TextField, Typography, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { StudentContext } from '../context/StudentContext';
+import { Box, Button, TextField, Typography, Paper, FormControl, InputLabel, Select, MenuItem, Alert } from '@mui/material';
 
 function AddStudent() {
-  const { addStudent } = useContext(StudentContext); // Get function from context
+  const { addStudent } = useContext(StudentContext);
   const navigate = useNavigate();
   const [rollNo, setRollNo] = useState('');
   const [name, setName] = useState('');
   const [department, setDepartment] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    addStudent({ rollNo, name, department }); // Use context function
-    navigate('/admin/students');
+    try {
+      await addStudent({ rollNo, name, department });
+      navigate('/admin/students');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to add student');
+    }
   };
 
-  // ... the rest of the component's return JSX stays the same
   return (
     <Paper sx={{ p: 4, maxWidth: 600, margin: 'auto' }}>
       <Typography variant="h4" sx={{ mb: 3 }}>Add a New Student</Typography>
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       <Box component="form" onSubmit={handleSubmit} noValidate>
-        {/* All TextField, Select, and Button components remain unchanged */}
         <TextField margin="normal" required fullWidth label="Roll Number" value={rollNo} onChange={(e) => setRollNo(e.target.value)} />
         <TextField margin="normal" required fullWidth label="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
         <FormControl fullWidth margin="normal">
