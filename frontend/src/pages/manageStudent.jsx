@@ -1,5 +1,3 @@
-
-
 // src/pages/ManageStudents.jsx
 
 import React, { useContext } from 'react'; // Import useContext
@@ -46,6 +44,7 @@ function ManageStudents() {
       <DataGrid
         rows={students} // Use students from context
         columns={columns}
+        getRowId={(row) => row.id}
         initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } }}}
         pageSizeOptions={[5, 10]}
         checkboxSelection

@@ -2,13 +2,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import './App.css'
+
 import LoginPage from "./pages/loginPage";
+
 import RegisterPage2 from "./pages/registerPage2";
 import { AuthProvider } from "./context/authContext";
 import AdminDashboard from "./pages/adminDashboard";
 import FacultyDashboard from "./pages/facultyDashboard";
 import StudentDashboard from "./pages/studentDashboard";
 import ProtectedRoute from "./components/protectedRoute";
+
 import Layout from "./components/layout";
 import ManageUsers from "./pages/manageUsers";
 import ManageCourses from "./pages/manageCourses";
@@ -71,6 +74,7 @@ function App() {
         </Router>
       </AuthProvider>
     </ThemeProvider>
+
   );
 }
 
