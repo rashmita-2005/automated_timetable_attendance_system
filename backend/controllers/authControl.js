@@ -14,9 +14,9 @@ const generateToken = (id, role) => {
 authRouter.post("/register",async function(req,res){
     try{
         const requiredBody=z.object({
-            email:z.string().min(15).max(80).email(),
+            email:z.string().min(5).max(80).email(),
             name:z.string().min(4).max(100),
-            password:z.string().min(8).max(100),
+            password:z.string().min(6).max(100),
             role:z.string(),
         });
         const safeParsedBody=requiredBody.safeParse(req.body);
@@ -61,8 +61,8 @@ authRouter.post("/register",async function(req,res){
 authRouter.post("/login", async function(req,res){
     try{
         const requiredBody=z.object({
-            email:z.string().min(15).max(80).email(),
-            password:z.string().min(8).max(100),
+            email:z.string().min(5).max(80).email(),
+            password:z.string().min(6).max(100),
         });
         const parsedBody=requiredBody.safeParse(req.body);
         if(!parsedBody.success){
