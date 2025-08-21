@@ -13,15 +13,18 @@ export const StudentProvider = ({ children }) => {
     const [students, setStudents] = useState([]);
 
     useEffect(()=>{
-        const fetchStudents=async()=>{
-            try{
-                const data=await getStudents();
-                setStudents(data.map(s=>({...s,id:s._id})));
-            }catch(err){
-                console.error(err);
+        const fetchStudents = async () => {
+            const data = await getStudents();
+            if (Array.isArray(data)) {
+                setStudents(data.map((s) => ({ ...s, id: s._id })));
+            } else {
+                console.error("Invalid students response:", data);
+                setStudents([]);
             }
         };
-        fetchStudents();
+        fetchStudents().catch((err) => {
+            console.error("Failed to fetch students:", err);
+        });
     },[]);
 
     const addStudent = async (student) => {
