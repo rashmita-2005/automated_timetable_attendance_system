@@ -1,48 +1,80 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import './App.css'
-import HomePage from "./pages/homepage"; 
+
+import LoginPage from "./pages/loginPage";
+
 import RegisterPage2 from "./pages/registerPage2";
-import LoginPage2 from "./pages/loginPage2";
 import { AuthProvider } from "./context/authContext";
 import AdminDashboard from "./pages/adminDashboard";
-import ProtectedRoute from "./components/protectedRoute";
-import StudentDashboard from "./pages/studentDashboard";
 import FacultyDashboard from "./pages/facultyDashboard";
-import ManageStudents from "./pages/manageStudent";
-import AddStudent from "./pages/addStudent";
-import EditStudent from "./pages/editStudent";
-import ManageFaculty from "./pages/manageFaculty";
-import AddFaculty from "./pages/addFaculty";
-import EditFaculty from "./pages/editFaculty";
-import { StudentProvider } from "./context/StudentContext";
-import { FacultyProvider } from "./context/FacultyContext";
+import StudentDashboard from "./pages/studentDashboard";
+import ProtectedRoute from "./components/protectedRoute";
+
+import Layout from "./components/layout";
+import ManageUsers from "./pages/manageUsers";
+import ManageCourses from "./pages/manageCourses";
+import ManageTimetable from "./pages/manageTimetable";
+import ManageAttendance from "./pages/manageAttendance";
+import ViewTimetable from "./pages/viewTimetable";
+import ViewAttendance from "./pages/viewAttendance";
+import Profile from "./pages/profile";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+});
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage2 />} />
+            
+            <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><Layout /></ProtectedRoute>}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="users" element={<ManageUsers />} />
+              <Route path="courses" element={<ManageCourses />} />
+              <Route path="timetable" element={<ManageTimetable />} />
+              <Route path="attendance" element={<ManageAttendance />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
 
-          <Route path="/register" element={<RegisterPage2 />} />
-          <Route path="/login" element={<LoginPage2 />} />
-          <Route path="/student-dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
-          <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/faculty-dashboard" element={<ProtectedRoute role="faculty"><FacultyDashboard /></ProtectedRoute>} />
-          <Route element={<ProtectedRoute role="admin"><StudentProvider><Outlet /></StudentProvider></ProtectedRoute>}>
-            <Route path="/admin/students" element={<ManageStudents />} />
-            <Route path="/admin/students/new" element={<AddStudent />} />
-            <Route path="/admin/students/edit/:id" element={<EditStudent />} />
-          </Route>
-          <Route element={<ProtectedRoute role="admin"><FacultyProvider><Outlet /></FacultyProvider></ProtectedRoute>}>
-            <Route path="/admin/faculty" element={<ManageFaculty />} />
-            <Route path="/admin/faculty/new" element={<AddFaculty />} />
-            <Route path="/admin/faculty/edit/:id" element={<EditFaculty />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+            <Route path="/faculty" element={<ProtectedRoute allowedRoles={['faculty']}><Layout /></ProtectedRoute>}>
+              <Route index element={<FacultyDashboard />} />
+              <Route path="dashboard" element={<FacultyDashboard />} />
+              <Route path="timetable" element={<ViewTimetable />} />
+              <Route path="attendance" element={<ManageAttendance />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
+
+            <Route path="/student" element={<ProtectedRoute allowedRoles={['student']}><Layout /></ProtectedRoute>}>
+              <Route index element={<StudentDashboard />} />
+              <Route path="dashboard" element={<StudentDashboard />} />
+              <Route path="timetable" element={<ViewTimetable />} />
+              <Route path="attendance" element={<ViewAttendance />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
+
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
+
   );
 }
 
