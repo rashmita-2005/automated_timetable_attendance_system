@@ -1,4 +1,4 @@
-const mongoose=required('mongoose');
+const mongoose = require('mongoose');
 
 const classroomSchema=new mongoose.Schema({
     size:{type:Number,required:true},
