@@ -1,3 +1,4 @@
+/* eslint react-refresh/only-export-components: "off" */
 import {createContext, useState, useEffect} from "react";
 export const AuthContext=createContext();
 export const AuthProvider=({children})=>{
@@ -19,7 +20,7 @@ export const AuthProvider=({children})=>{
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
     };
-    const logout=(userData)=>{
+    const logout=()=>{
         setUser(null);
         localStorage.removeItem("user");
     }

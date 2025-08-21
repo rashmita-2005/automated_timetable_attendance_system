@@ -17,14 +17,14 @@ function LoginPage2() {
     e.preventDefault();
     try {
       const data = await loginUser(form);
-      login(data); 
+      login({ ...data.user, token: data.token });
       alert("Login successful!");
       console.log(data);
 
       // Navigate based on role
-      if (data.role === "student") navigate("/student-dashboard");
-      else if (data.role === "faculty") navigate("/faculty-dashboard");
-      else if (data.role === "admin") navigate("/admin-dashboard");
+      if (data.user.role === "student") navigate("/student-dashboard");
+      else if (data.user.role === "faculty") navigate("/faculty-dashboard");
+      else if (data.user.role === "admin") navigate("/admin-dashboard");
       else navigate("/"); // fallback
     } catch (err) {
       alert("Error: " + err.response?.data?.message || "Invalid credentials");
