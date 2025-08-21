@@ -82,11 +82,12 @@ authRouter.post("/login", async function(req,res){
             return res.status(400).json({message:"Invalid email or password"});
         }
         res.json({
-            email:user.email,
-            name:user.name,
-            role:user.role,
-            token:generateToken(user._id,user.role),
-
+            user: {
+                email: user.email,
+                name: user.name,
+                role: user.role,
+            },
+            token: generateToken(user._id, user.role),
         });
     }catch(error){
         res.status(500).json({message:"server error",error:error.message});
