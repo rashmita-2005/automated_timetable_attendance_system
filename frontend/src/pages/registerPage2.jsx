@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
 
 function RegisterPage2() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    role: ""
+    role: "",
+    department: "",
+    employeeId: "",
+    rollNo: "",
+    phone: ""
   });
 
   const handleChange = (e) => {
@@ -18,11 +23,11 @@ function RegisterPage2() {
     e.preventDefault();
     console.log("Form data before submit:", form);
     try {
-      const data = await registerUser(form);
-      alert("Registration successful!");
-      console.log(data);
+      await registerUser(form);
+      alert("Registration successful! Please login with your credentials.");
+      navigate("/login");
     } catch (err) {
-      alert("Error: " + err.response?.data?.message || "Something went wrong");
+      alert("Error: " + (err.response?.data?.message || "Something went wrong"));
     }
   };
 
@@ -94,7 +99,7 @@ function RegisterPage2() {
           </div>
 
           {/* Role */}
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="role"
@@ -114,6 +119,89 @@ function RegisterPage2() {
               <option value="faculty">Faculty</option>
               <option value="admin">Admin</option>
             </select>
+          </div>
+
+          {/* Department */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="department"
+            >
+              Department
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+              id="department"
+              type="text"
+              name="department"
+              placeholder="Computer Science"
+              value={form.department}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Employee ID - show only for faculty and admin */}
+          {(form.role === 'faculty' || form.role === 'admin') && (
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="employeeId"
+              >
+                Employee ID
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+                id="employeeId"
+                type="text"
+                name="employeeId"
+                placeholder="EMP001"
+                value={form.employeeId}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
+
+          {/* Roll Number - show only for students */}
+          {form.role === 'student' && (
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="rollNo"
+              >
+                Roll Number
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+                id="rollNo"
+                type="text"
+                name="rollNo"
+                placeholder="CS2021001"
+                value={form.rollNo}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
+
+          {/* Phone - optional */}
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="phone"
+            >
+              Phone Number (optional)
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+              id="phone"
+              type="tel"
+              name="phone"
+              placeholder="+1234567890"
+              value={form.phone}
+              onChange={handleChange}
+            />
           </div>
 
           <button
