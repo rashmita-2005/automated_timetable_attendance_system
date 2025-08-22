@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import './App.css'
-
+import HomePage from "./pages/homepage";
 import LoginPage from "./pages/loginPage";
 
 import RegisterPage2 from "./pages/registerPage2";
@@ -67,9 +67,9 @@ function App() {
               <Route path="attendance" element={<ViewAttendance />} />
               <Route path="profile" element={<Profile />} />
             </Route>
-
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="/" element={<HomePage />} />
+            
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
       </AuthProvider>
