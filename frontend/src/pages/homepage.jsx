@@ -22,25 +22,25 @@ export default function HomePage() {
       </header>
 
       {/* Hero */}
-      <main className="flex flex-grow flex-col items-center justify-center bg-white">
+      <main className="flex  flex-col items-center justify-center bg-white py-6">
         <div className="max-w-3xl px-6 text-center">
-          <h2 className="mb-6 bg-gradient-to-r from-sky-600 to-sky-600 bg-clip-text text-5xl font-extrabold text-transparent">
+          <h2 className="mb-6 bg-gradient-to-r from-sky-600 to-sky-600 bg-clip-text text-5xl font-extrabold text-transparent py-6">
             Simplify Academic Management
           </h2>
           <p className="mb-8 text-gray-600">
             Automate schedule creation, monitor attendance in real time, and
             gain actionable insights—all from a single intuitive dashboard.
           </p>
-          <div className="space-x-4">
+          <div className="flex justify-center space-x-4">
             <Link
               to="/register"
-              className="rounded-md bg-sky-600 px-8 py-3 font-semibold text-white shadow hover:bg-sky-700"
+              className="rounded-md bg-sky-600 px-8 py-3 font-semibold text-white shadow hover:bg-sky-600"
             >
               Get Started
             </Link>
             <Link
               to="/login"
-              className="rounded-md border border-sky-600 px-8 py-3 font-semibold text-sky-600 hover:bg-sky-50"
+              className="rounded-md border border-sky-700 px-8 py-3 font-semibold text-sky-600 hover:bg-sky-50"
             >
               Sign In
             </Link>
