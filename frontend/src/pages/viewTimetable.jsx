@@ -36,7 +36,6 @@ const TimeSlot = ({ time, classes }) => (
 const ViewTimetable = () => {
   const { user } = useAuth();
   const [timetable, setTimetable] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -47,7 +46,6 @@ const ViewTimetable = () => {
   }, []);
 
   const fetchTimetable = async () => {
-    setLoading(true);
     try {
       const params = {};
       if (user.role === 'faculty') {
@@ -59,9 +57,8 @@ const ViewTimetable = () => {
       const response = await apiClient.get('/timetable', { params });
       setTimetable(response.data.timetable || []);
     } catch (err) {
+      console.error('Failed to fetch timetable', err);
       setError('Failed to fetch timetable');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -107,6 +104,10 @@ const ViewTimetable = () => {
                     {classes.map((classItem, index) => (
                       <Card key={index} sx={{ mb: 1, bgcolor: 'primary.light', color: 'white' }}>
                         <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
+                          <Typography variant="caption">
+                            {classItem.startTime} - {classItem.endTime}
+                          </Typography>
+                          <br />
                           <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
                             {classItem.courseId?.name}
                           </Typography>
